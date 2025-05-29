@@ -3,7 +3,7 @@ include 'DBConnector.php';
 date_default_timezone_set('Asia/Manila');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $TripID = $_POST['TripID'];
+    // $TripID = $_POST['TripID'];
     $JeepName1 = $_POST['JeepName1'];
     $JeepName2 = $_POST['JeepName2'] ?: NULL;
     $PickupPoint = $_POST['PickupPoint'];
@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $DateCreated = date('Y-m-d');
     $TimeCreated = date('H:i:s');
 
-    $stmt = $conn->prepare("INSERT INTO SavedTrips (TripID, JeepName1, JeepName2, PickupPoint, DropoffPoint, DestinationPoint, PassengerType, ACType, Fare, DateCreated, TimeCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("issssssssss", $TripID, $JeepName1, $JeepName2, $PickupPoint, $DropoffPoint, $DestinationPoint, $PassengerType, $ACType, $Fare, $DateCreated, $TimeCreated);
+    $stmt = $conn->prepare("INSERT INTO SavedTrips (JeepName1, JeepName2, PickupPoint, DropoffPoint, DestinationPoint, PassengerType, ACType, Fare, DateCreated, TimeCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssss", $JeepName1, $JeepName2, $PickupPoint, $DropoffPoint, $DestinationPoint, $PassengerType, $ACType, $Fare, $DateCreated, $TimeCreated);
 
     if ($stmt->execute()) {
         echo "Trip saved successfully! <a href='routeFinder.php'>Back to Route Finder</a>";

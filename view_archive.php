@@ -5,49 +5,23 @@ date_default_timezone_set('Asia/Manila'); // Set timezone for timestamps
 // Handle delete request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_trip_id'])) {
     $deleteTripID = intval($_POST['delete_trip_id']);
+
+    // First delete from SavedTrips
+    $stmtSaved = $conn->prepare("DELETE FROM SavedTrips WHERE TripID = ?");
+    $stmtSaved->bind_param("i", $deleteTripID);
+    $stmtSaved->execute();
+    $stmtSaved->close();
+
+    // Then delete from Trips
     $stmtDelete = $conn->prepare("DELETE FROM Trips WHERE TripID = ?");
     $stmtDelete->bind_param("i", $deleteTripID);
     $stmtDelete->execute();
     $stmtDelete->close();
+
+    // Redirect to refresh page
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
-
-// Helper functions
-function getJeepName($conn, $jeepID) {
-    if (!$jeepID) return null;
-    $stmt = $conn->prepare("SELECT JeepName FROM Jeep WHERE JeepID = ?");
-    $stmt->bind_param("i", $jeepID);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $name = ($row = $result->fetch_assoc()) ? $row['JeepName'] : null;
-    $stmt->close();
-    return $name;
-}
-
-function getLandmarkName($conn, $landmarkID) {
-    if (!$landmarkID) return null;
-    $stmt = $conn->prepare("SELECT LandmarkName FROM Landmarks WHERE LandmarkID = ?");
-    $stmt->bind_param("i", $landmarkID);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $name = ($row = $result->fetch_assoc()) ? $row['LandmarkName'] : null;
-    $stmt->close();
-    return $name;
-}
-
-function getSavedTripTimestamp($conn, $tripID) {
-    $stmt = $conn->prepare("SELECT DateCreated, TimeCreated FROM SavedTrips WHERE TripID = ?");
-    $stmt->bind_param("i", $tripID);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $timestamps = ($row = $result->fetch_assoc()) ? $row : null;
-    $stmt->close();
-    return $timestamps;
-}
-
-// Fetch trips
-$result = $conn->query("SELECT * FROM Trips ORDER BY TripID DESC");
 ?>
 
 <!DOCTYPE html>
@@ -189,36 +163,42 @@ $result = $conn->query("SELECT * FROM Trips ORDER BY TripID DESC");
     <table>
         <thead>
             <tr>
-                <th>Trip ID</th>
+                <!-- <th>Trip ID</th> -->
                 <th>Jeep 1</th>
                 <th>Jeep 2</th>
-                <th>Origin</th>
+                <th>Pickup Point</th>
                 <th>Drop-Off</th>
                 <th>Destination</th>
                 <th>AC Type</th>
                 <th>Passenger Type</th>
                 <th>Fare (₱)</th>
+                <th>Estimated Time</th>
                 <th>Date Created</th>
                 <th>Time Created</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <?php while ($trip = $result->fetch_assoc()):
-                $timestamps = getSavedTripTimestamp($conn, $trip['TripID']);
+            <?php
+            $sql = "SELECT * FROM SavedTrips ORDER BY TripID ASC";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0):
+                while ($trip = $result->fetch_assoc()):
             ?>
                 <tr>
-                    <td data-label="Trip ID"><?= htmlspecialchars($trip['TripID']) ?></td>
-                    <td data-label="Jeep 1"><?= htmlspecialchars(getJeepName($conn, $trip['JeepID1']) ?: 'N/A') ?></td>
-                    <td data-label="Jeep 2"><?= htmlspecialchars(getJeepName($conn, $trip['JeepID2']) ?: 'N/A') ?></td>
-                    <td data-label="Origin"><?= htmlspecialchars(getLandmarkName($conn, $trip['OriginID']) ?: 'N/A') ?></td>
-                    <td data-label="Drop-Off"><?= htmlspecialchars(getLandmarkName($conn, $trip['DropOffID']) ?: 'N/A') ?></td>
-                    <td data-label="Destination"><?= htmlspecialchars(getLandmarkName($conn, $trip['DestinationID']) ?: 'N/A') ?></td>
+                    <!-- <td data-label="Trip ID"><?= htmlspecialchars($trip['TripID']) ?></td> -->
+                    <td data-label="Jeep 1"><?= htmlspecialchars($trip['JeepName1'] ?: 'N/A') ?></td>
+                    <td data-label="Jeep 2"><?= htmlspecialchars($trip['JeepName2'] ?: 'N/A') ?></td>
+                    <td data-label="Pickup Point"><?= htmlspecialchars($trip['PickupPoint'] ?: 'N/A') ?></td>
+                    <td data-label="Drop-Off"><?= htmlspecialchars($trip['DropoffPoint'] ?: 'N/A') ?></td>
+                    <td data-label="Destination"><?= htmlspecialchars($trip['DestinationPoint'] ?: 'N/A') ?></td>
                     <td data-label="AC Type"><?= htmlspecialchars($trip['ACType'] ?: 'N/A') ?></td>
                     <td data-label="Passenger Type"><?= htmlspecialchars($trip['PassengerType'] ?: 'N/A') ?></td>
-                    <td data-label="Fare"><?= number_format($trip['Fare'], 2) ?></td>
-                    <td data-label="Date Created"><?= $timestamps ? htmlspecialchars($timestamps['DateCreated']) : '<em>Not saved</em>' ?></td>
-                    <td data-label="Time Created"><?= $timestamps ? htmlspecialchars($timestamps['TimeCreated']) : '<em>Not saved</em>' ?></td>
+                    <td data-label="Fare (₱)"><?= number_format((float)$trip['Fare'], 2) ?></td>
+                    <td data-label="Estimated Time"><?= htmlspecialchars($trip['EstimatedTime'] ?: 'N/A') ?></td>
+                    <td data-label="Date Created"><?= htmlspecialchars($trip['DateCreated'] ?: 'N/A') ?></td>
+                    <td data-label="Time Created"><?= htmlspecialchars($trip['TimeCreated'] ?: 'N/A') ?></td>
                     <td data-label="Action">
                         <form method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete Trip ID <?= htmlspecialchars($trip['TripID']) ?>?');">
                             <input type="hidden" name="delete_trip_id" value="<?= htmlspecialchars($trip['TripID']) ?>" />
@@ -226,9 +206,11 @@ $result = $conn->query("SELECT * FROM Trips ORDER BY TripID DESC");
                         </form>
                     </td>
                 </tr>
-            <?php endwhile; ?>
-            <?php if ($result->num_rows === 0): ?>
-                <tr><td colspan="12" style="text-align:center; padding: 1rem;">No trips found.</td></tr>
+            <?php
+                endwhile;
+            else:
+            ?>
+                <tr><td colspan="13" style="text-align:center; padding: 1rem;">No trips found.</td></tr>
             <?php endif; ?>
         </tbody>
     </table>
