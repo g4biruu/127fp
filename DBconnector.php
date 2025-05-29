@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root"; // default username
 $password = ""; // default password
-$dbname = "cmsc127";
+$dbname = "transpo_final";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
