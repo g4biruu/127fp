@@ -103,17 +103,26 @@ $fares = $conn->query("SELECT * FROM Fare ORDER BY FareID ASC");
                             <th scope="col">Passenger Type</th>
                             <th scope="col">Fare per KM</th>
                             <th scope="col">Minimum Fare</th>
+                            <th scope="col">AC Type</th>
                             <th scope="col" class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php while ($row = $fares->fetch_assoc()): ?>
+                            <?php
+                                if ($row['FareID'] > 4){
+                                    $ACType = "Non AC";
+                                }else{
+                                    $ACType = "AC";
+                                }
+                            ?>
                         <tr>
                             <form method="POST" class="d-flex gap-2 flex-wrap">
                                 <td><?= $row['FareID'] ?><input type="hidden" name="FareID" value="<?= $row['FareID'] ?>"></td>
                                 <td><input type="text" name="PassengerType" value="<?= $row['PassengerType'] ?>" class="form-control form-control-sm"></td>
                                 <td><input type="number" step="0.01" name="FarePerKM" value="<?= $row['FarePerKM'] ?>" class="form-control form-control-sm"></td>
                                 <td><input type="number" step="0.01" name="MinimumFare" value="<?= $row['MinimumFare'] ?>" class="form-control form-control-sm"></td>
+                                <td><?= $ACType ?></td>
                                 <td class="text-center">
                                     <button type="submit" name="edit" class="btn btn-sm btn-primary me-1">Save</button>
                                     <!-- <button type="submit" name="delete" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button> -->
