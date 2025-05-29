@@ -29,11 +29,13 @@
 
     <div class="map-section">
         <h2>Sample Terminal Map (Static)</h2>
-        <div class="map">
+        <img src="staticMap.png" class="staticMap" style="margin: 0 auto; border: 5px solid black">
+        <!-- <div class="map">
             <div class="map-label">Landmark 1</div>
             <div class="map-label">Terminal 1</div>
             <div class="map-label">Terminal 2</div>
-        </div>
+            <img src="staticMap.png" class="staticMap">
+        </div> -->
     </div>
 </body>
 </html>
