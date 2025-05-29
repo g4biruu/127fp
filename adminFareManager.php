@@ -17,15 +17,15 @@ if (isset($_POST['edit'])) {
     $message = "Fare updated successfully!";
 }
 
-// Handle Delete
-if (isset($_POST['delete'])) {
-    $fareID = $_POST['FareID'];
+// // Handle Delete
+// if (isset($_POST['delete'])) {
+//     $fareID = $_POST['FareID'];
 
-    $conn->query("DELETE FROM jeepFare WHERE FareID=$fareID");
-    $conn->query("DELETE FROM Fare WHERE FareID=$fareID");
+//     $conn->query("DELETE FROM jeepFare WHERE FareID=$fareID");
+//     $conn->query("DELETE FROM Fare WHERE FareID=$fareID");
 
-    $message = "Fare deleted successfully!";
-}
+//     $message = "Fare deleted successfully!";
+// }
 
 $fares = $conn->query("SELECT * FROM Fare ORDER BY FareID ASC");
 ?>
@@ -116,7 +116,7 @@ $fares = $conn->query("SELECT * FROM Fare ORDER BY FareID ASC");
                                 <td><input type="number" step="0.01" name="MinimumFare" value="<?= $row['MinimumFare'] ?>" class="form-control form-control-sm"></td>
                                 <td class="text-center">
                                     <button type="submit" name="edit" class="btn btn-sm btn-primary me-1">Save</button>
-                                    <button type="submit" name="delete" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                    <!-- <button type="submit" name="delete" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button> -->
                                 </td>
                             </form>
                         </tr>
