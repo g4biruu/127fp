@@ -158,15 +158,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_trip_id'])) {
         <thead>
             <tr>
                 <!-- <th>Trip ID</th> -->
+                 <th>Pickup Point</th>
                 <th>Jeep 1</th>
-                <th>Jeep 2</th>
-                <th>Pickup Point</th>
                 <th>Drop-Off</th>
+                <th>Jeep 2</th>
                 <th>Destination</th>
                 <th>AC Type</th>
                 <th>Passenger Type</th>
                 <th>Fare (₱)</th>
-                <th>Estimated Time</th>
+                <!-- <th>Estimated Time</th> -->
                 <th>Date Created</th>
                 <th>Time Created</th>
                 <th>Action</th>
@@ -182,15 +182,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_trip_id'])) {
             ?>
                 <tr>
                     <!-- <td data-label="Trip ID"><?= htmlspecialchars($trip['TripID']) ?></td> -->
+                     <td data-label="Pickup Point"><?= htmlspecialchars($trip['PickupPoint'] ?: 'N/A') ?></td>
                     <td data-label="Jeep 1"><?= htmlspecialchars($trip['JeepName1'] ?: 'N/A') ?></td>
-                    <td data-label="Jeep 2"><?= htmlspecialchars($trip['JeepName2'] ?: 'N/A') ?></td>
-                    <td data-label="Pickup Point"><?= htmlspecialchars($trip['PickupPoint'] ?: 'N/A') ?></td>
                     <td data-label="Drop-Off"><?= htmlspecialchars($trip['DropoffPoint'] ?: 'N/A') ?></td>
+                    <td data-label="Jeep 2"><?= htmlspecialchars($trip['JeepName2'] ?: 'N/A') ?></td>
                     <td data-label="Destination"><?= htmlspecialchars($trip['DestinationPoint'] ?: 'N/A') ?></td>
                     <td data-label="AC Type"><?= htmlspecialchars($trip['ACType'] ?: 'N/A') ?></td>
                     <td data-label="Passenger Type"><?= htmlspecialchars($trip['PassengerType'] ?: 'N/A') ?></td>
                     <td data-label="Fare (₱)"><?= number_format((float)$trip['Fare'], 2) ?></td>
-                    <td data-label="Estimated Time"><?= htmlspecialchars($trip['EstimatedTime'] ?: 'N/A') ?></td>
+                    <!-- <td data-label="Estimated Time"><?//= htmlspecialchars($trip['EstimatedTime'] ?: 'N/A') ?></td> -->
                     <td data-label="Date Created"><?= htmlspecialchars($trip['DateCreated'] ?: 'N/A') ?></td>
                     <td data-label="Time Created"><?= htmlspecialchars($trip['TimeCreated'] ?: 'N/A') ?></td>
                     <td data-label="Action">
