@@ -3,19 +3,6 @@ require_once 'DBConnector.php';
 
 $message = "";
 
-// Handle Add
-if (isset($_POST['add'])) {
-    $passengerType = $_POST['PassengerType'];
-    $farePerKM = $_POST['FarePerKM'];
-    $minimumFare = $_POST['MinimumFare'];
-
-    $stmt = $conn->prepare("INSERT INTO Fare (PassengerType, FarePerKM, MinimumFare) VALUES (?, ?, ?)");
-    $stmt->bind_param("sdd", $passengerType, $farePerKM, $minimumFare);
-    $stmt->execute();
-    $stmt->close();
-    $message = "Fare added successfully!";
-}
-
 // Handle Edit
 if (isset($_POST['edit'])) {
     $fareID = $_POST['FareID'];
@@ -44,25 +31,58 @@ $fares = $conn->query("SELECT * FROM Fare ORDER BY FareID ASC");
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Jeepney Fare Management</title>
-    <link href="style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        header {
+            background-color: #06b0f0;
+            padding: 1rem 2rem;
+            color: white;
+        }
+        .logo {
+            height: 50px;
+            margin-right: 1rem;
+        }
+        .logo-title {
+            display: flex;
+            align-items: center;
+        }
+        .main-nav {
+            background-color: #ffffff;
+            padding: 0.75rem 2rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .main-nav button {
+            margin-right: 10px;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body>
-<header>
+
+<header class="shadow-sm">
     <div class="logo-title">
         <img src="123.png" alt="Logo" class="logo">
-        <h1>Sakay na Iloilo!</h1>
+        <h1 class="h4 mb-0">Sakay na Iloilo!</h1>
     </div>
 </header>
 
-<nav class="main-nav">
-    <button onclick="location.href='index.php'">Home</button>
-    <button onclick="location.href='routeFinder.php'">Route Finder</button>
-    <button onclick="location.href='view_archive.php'">Saved Trips</button>
+<nav class="main-nav d-flex justify-content-start shadow-sm">
+    <button onclick="location.href='index.php'" class="btn btn-outline-primary btn-sm">Home</button>
+    <button onclick="location.href='routeFinder.php'" class="btn btn-outline-primary btn-sm">Route Finder</button>
+    <button onclick="location.href='view_archive.php'" class="btn btn-outline-primary btn-sm">Saved Trips</button>
 </nav>
-<div class="container mt-5">
+
+<div class="container my-5">
     <h2 class="mb-4 text-primary">🛺 Jeepney Fare Management</h2>
 
     <?php if ($message): ?>
@@ -72,55 +92,39 @@ $fares = $conn->query("SELECT * FROM Fare ORDER BY FareID ASC");
         </div>
     <?php endif; ?>
 
-    <div class="card mb-4">
-        <div class="card-header fw-semibold">Add Fare</div>
+    <div class="card">
         <div class="card-body">
-            <form method="POST" class="row g-3">
-                <div class="col-md-4">
-                    <input type="text" name="PassengerType" class="form-control" placeholder="Passenger Type" required>
-                </div>
-                <div class="col-md-3">
-                    <input type="number" name="FarePerKM" step="0.01" class="form-control" placeholder="Fare per KM" required>
-                </div>
-                <div class="col-md-3">
-                    <input type="number" name="MinimumFare" step="0.01" class="form-control" placeholder="Minimum Fare" required>
-                </div>
-                <div class="col-md-2 d-grid">
-                    <button type="submit" name="add" class="btn btn-success">Add Fare</button>
-                </div>
-            </form>
+            <h5 class="card-title mb-3">Current Fares</h5>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Fare ID</th>
+                            <th scope="col">Passenger Type</th>
+                            <th scope="col">Fare per KM</th>
+                            <th scope="col">Minimum Fare</th>
+                            <th scope="col" class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = $fares->fetch_assoc()): ?>
+                        <tr>
+                            <form method="POST" class="d-flex gap-2 flex-wrap">
+                                <td><?= $row['FareID'] ?><input type="hidden" name="FareID" value="<?= $row['FareID'] ?>"></td>
+                                <td><input type="text" name="PassengerType" value="<?= $row['PassengerType'] ?>" class="form-control form-control-sm"></td>
+                                <td><input type="number" step="0.01" name="FarePerKM" value="<?= $row['FarePerKM'] ?>" class="form-control form-control-sm"></td>
+                                <td><input type="number" step="0.01" name="MinimumFare" value="<?= $row['MinimumFare'] ?>" class="form-control form-control-sm"></td>
+                                <td class="text-center">
+                                    <button type="submit" name="edit" class="btn btn-sm btn-primary me-1">Save</button>
+                                    <button type="submit" name="delete" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                </td>
+                            </form>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-
-    <h4 class="mb-3">Current Fares</h4>
-    <div class="table-responsive">
-        <table class="table table-striped table-hover table-bordered align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th>Fare ID</th>
-                    <th>Passenger Type</th>
-                    <th>Fare per KM</th>
-                    <th>Minimum Fare</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $fares->fetch_assoc()): ?>
-                <tr>
-                    <form method="POST" class="row g-1">
-                        <td class="col-1"><?= $row['FareID'] ?><input type="hidden" name="FareID" value="<?= $row['FareID'] ?>"></td>
-                        <td class="col-3"><input type="text" name="PassengerType" value="<?= $row['PassengerType'] ?>" class="form-control"></td>
-                        <td class="col-2"><input type="number" step="0.01" name="FarePerKM" value="<?= $row['FarePerKM'] ?>" class="form-control"></td>
-                        <td class="col-2"><input type="number" step="0.01" name="MinimumFare" value="<?= $row['MinimumFare'] ?>" class="form-control"></td>
-                        <td class="col-4 text-center">
-                            <button type="submit" name="edit" class="btn btn-primary btn-sm me-1">Save</button>
-                            <button type="submit" name="delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
-                        </td>
-                    </form>
-                </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
     </div>
 </div>
 
