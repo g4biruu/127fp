@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sakay na Iloilo! - Route Finder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Rubik+Rounded:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: #ffffff88;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-title img {
+            height: 50px;
+            margin-right: 1rem;
+        }
+
+        .logo-title h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .admin-login-btn {
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            background: #00b894;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .admin-login-btn:hover {
+            background: #019875;
+        }
+
+        .route-form {
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .route-form select {
+            margin: 0 1rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            min-width: 200px;
+            font-size: 1rem;
+        }
+
+        .map-section {
+            background: white;
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+
+        .map {
+            position: relative;
+            background: #ecf0f1;
+            height: 300px;
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
+
+        .map-label {
+            position: absolute;
+            background: #2ecc71;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+
+        .table-section {
+            background: #ffffffdd;
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 1000px;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .table-section h3 {
+            font-family: 'Rubik Rounded', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            color: #2d3436;
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #00cec9;
+            color: white;
+        }
+
+        td {
+            background: #f9f9f9;
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: #222;
+            transition: color 0.3s ease;
+        }
+
+        .home-link:hover {
+            color: #10b981;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo-title">
+        <img src="logo.png" alt="Logo">
+        <h1><a href="route_finder.html" class="home-link">Sakay na Iloilo!</a></h1>
+
+    </div>
+    <a href="admin_login.html" class="admin-login-btn">Admin Login</a>
+</header>
+
+<div class="route-form">
+    <label for="from">From:</label>
+    <select id="from">
+        <option>Select Origin</option>
+    </select>
+
+    <label for="to">To:</label>
+    <select id="to">
+        <option>Select Destination</option>
+    </select>
+</div>
+
+<div class="map-section">
+    <h2>Transport Map (Static)</h2>
+    <div class="map">
+        <div class="map-label" style="top: 30px; left: 20px;">Landmark 1</div>
+        <div class="map-label" style="top: 20px; right: 20px;">Terminal 1</div>
+        <div class="map-label" style="bottom: 20px; left: 50%;">Terminal 2</div>
+    </div>
+</div>
+
+<div class="table-section">
+    <h3>Jeepney to Ride</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Vehicle to Ride</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Time of Travel</th>
+            <th>Est. Total Time of Travel</th>
+            <th>Est. Total Fare</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td colspan="6">No data available</td></tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

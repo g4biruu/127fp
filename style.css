@@ -1,0 +1,132 @@
+
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: #f9fafb;
+    color: #333;
+}
+
+header {
+    background-color: #00695c;
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px;
+    background-color: #004d40;
+}
+
+.main-nav button {
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.main-nav button:hover {
+    background-color: #e0f2f1;
+}
+
+.login-link {
+    margin-left: auto;
+    align-self: center;
+}
+
+.login-link a {
+    color: #ffffff;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.intro {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #e0f7fa;
+}
+
+.intro h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.intro p {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 10px auto;
+}
+
+.map-section {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.map-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+}
+
+.map {
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    height: 300px;
+    margin: 0 auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background: linear-gradient(to bottom right, #ffffff, #f0f0f0);
+}
+
+.map-label {
+    position: absolute;
+    background: #004d40;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+    .main-nav {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .login-link {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}

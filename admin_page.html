@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page - Sakay na Iloilo!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #ffffff88;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-title img {
+            height: 50px;
+            margin-right: 1rem;
+        }
+
+        .logo-title h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        h2 {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+        }
+
+        .data-section {
+            background: white;
+            padding: 1rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        select {
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-left: 1rem;
+            font-size: 1rem;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 1rem;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        th {
+            background-color: #00cec9;
+            color: white;
+        }
+
+        .button-group {
+            margin-top: 1rem;
+            text-align: right;
+        }
+
+        .button-group button {
+            margin-left: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            background: #0984e3;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .button-group button:hover {
+            background: #0756b3;
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: #222;
+            transition: color 0.3s ease;
+        }
+
+        .home-link:hover {
+            color: #10b981;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-title">
+        <img src="logo.png" alt="Logo">
+        <h1><a href="route_finder.html" class="home-link">Sakay na Iloilo!</a></h1>
+
+    </div>
+</header>
+
+<main>
+    <h2>Admin Page</h2>
+
+    <div class="data-section">
+        <h3>Fare Data</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>FareId</th>
+                    <th>PassengerType</th>
+                    <th>FarePerKM</th>
+                    <th>Minimum Fare</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="4">Fare data goes here...</td></tr>
+            </tbody>
+        </table>
+        <div class="button-group">
+            <button>Edit Fare Data</button>
+            <button>Add Fare</button>
+            <button>Delete Fare</button>
+        </div>
+    </div>
+
+    <div class="data-section">
+        <h3>Jeep Fare Data</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>JeepID</th>
+                    <th>JeepName</th>
+                    <th>FareID</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="5">Jeep Fare goes here...</td></tr>
+            </tbody>
+        </table>
+        <div class="button-group">
+            <button>Edit JeepFare Data</button>
+            <button>Add JeepFare</button>
+            <button>Delete JeepFare</button>
+        </div>
+    </div>
+
+    <div class="data-section">
+        <h3>Landmark Data</h3>
+        <label for="town-select">Select Town:</label>
+        <select id="town-select">
+            <option>-- Choose Town --</option>
+        </select>
+        <table>
+            <thead>
+                <tr>
+                    <th>LandmarkID</th>
+                    <th>LandmarkName</th>
+                    <th>Origin</th>
+                    <th>DistanceFromOrigin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="4">Landmark data goes here...</td></tr>
+            </tbody>
+        </table>
+        <div class="button-group">
+            <button>Edit Landmark Data</button>
+            <button>Add Landmark</button>
+            <button>Delete Landmark</button>
+        </div>
+    </div>
+
+    <div class="data-section">
+        <h3>JeepLandmark Data</h3>
+        <label for="jeep-select">Select Jeep:</label>
+        <select id="jeep-select">
+            <option>-- Choose Jeep --</option>
+        </select>
+        <table>
+            <thead>
+                <tr>
+                    <th>JeepLandmarkConnectionID</th>
+                    <th>JeepID</th>
+                    <th>LandmarkID</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="4">JeepLandmark data goes here...</td></tr>
+            </tbody>
+        </table>
+        <div class="button-group">
+            <button>Edit JeepLandmark Data</button>
+            <button>Add JeepLandmark</button>
+            <button>Delete JeepLandmark</button>
+        </div>
+    </div>
+</main>
+</body>
+</html>
