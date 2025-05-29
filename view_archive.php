@@ -1,8 +1,8 @@
 <?php
 include 'DBConnector.php';
-date_default_timezone_set('Asia/Manila'); // Set timezone for timestamps
+date_default_timezone_set('Asia/Manila');
 
-// Handle delete request
+// Handle delete request / delet elogic
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_trip_id'])) {
     $deleteTripID = intval($_POST['delete_trip_id']);
 
@@ -11,12 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_trip_id'])) {
     $stmtSaved->bind_param("i", $deleteTripID);
     $stmtSaved->execute();
     $stmtSaved->close();
-
-    // Then delete from Trips
-    $stmtDelete = $conn->prepare("DELETE FROM Trips WHERE TripID = ?");
-    $stmtDelete->bind_param("i", $deleteTripID);
-    $stmtDelete->execute();
-    $stmtDelete->close();
 
     // Redirect to refresh page
     header("Location: " . $_SERVER['PHP_SELF']);

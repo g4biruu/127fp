@@ -23,6 +23,7 @@ include 'DBConnector.php';
     </thead>
     <tbody>
         <?php
+        // Obtains data and displays data from the trips table
         $sql = "SELECT 
                     t.TripID,
                     j1.JeepName AS Jeep1,

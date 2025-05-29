@@ -52,6 +52,7 @@ if ($result1 && $result2 && $result1->num_rows > 0 && $result2->num_rows > 0) {
     // DELETE ALL ROWS USING TRUNCHATE (para di confusing)
     $conn->query("TRUNCATE TABLE Trips;");
 
+    // Combination of jeeps for two-ride trips 
     foreach ($jeeps1 as $jeep1) {
         foreach ($jeeps2 as $jeep2) {
             // Skip if both jeeps are the same (optional, depends on logic)
@@ -89,6 +90,7 @@ if ($result1 && $result2 && $result1->num_rows > 0 && $result2->num_rows > 0) {
 
             $totalFare = $fare1 + $fare2;
 
+            // Insert into trips for displaying
             $sqlInsert = "INSERT INTO Trips (`TripID`, `JeepID1`, `JeepID2`, `OriginID`, `DropOffID`, `DestinationID`, `ACType`, `PassengerType`, `Fare`) VALUES 
                           (NULL, " . $jeep1['JeepID'] . ", " . $jeep2['JeepID'] . ", $originID, $dropOffID, $destinationID, '$ACType', '$PassengerType', $totalFare)";
             $conn->query($sqlInsert);
