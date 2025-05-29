@@ -2,7 +2,7 @@
 include 'DBConnector.php';
 date_default_timezone_set('Asia/Manila');
 
-// Handle delete request / delet elogic
+// Handle delete request / delete logic
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_trip_id'])) {
     $deleteTripID = intval($_POST['delete_trip_id']);
 
