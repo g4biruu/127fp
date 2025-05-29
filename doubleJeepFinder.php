@@ -95,7 +95,7 @@ if ($result1 && $result2 && $result1->num_rows > 0 && $result2->num_rows > 0) {
         }
     }
 
-    header("Location: http://localhost/127FinalProj/routeFinder.php");
+    header("Location: http://localhost/127fp/routeFinder.php");
     exit();
 
 } else {

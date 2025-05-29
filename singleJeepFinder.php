@@ -63,7 +63,7 @@ if ($result && $result->num_rows > 0) {
         $conn->query($sqlInsert);
     }
 
-    header("Location: http://localhost/127FinalProj/routeFinder.php");
+    header("Location: http://localhost/127fp/routeFinder.php");
     exit();
 } else {
     $sql = "SELECT L.LandmarkName
